@@ -1,0 +1,163 @@
+---
+import { business, photos } from '../data/site';
+import Bubbles from './Bubbles.astro';
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import Arrow from './doodles/Arrow.astro';
+import Sparkle from './doodles/Sparkle.astro';
+import Squiggle from './doodles/Squiggle.astro';
+---
+<section class="hero scallop-bottom" id="top">
+  <Bubbles count={16} />
+
+  <div class="wrap hero-grid">
+    <div class="copy">
+      <a class="pill rating" href="#reviews">
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        {business.rating} from {business.reviewCount} Google reviews
+      </a>
+      <h1>
+        Dogs and cats, groomed with
+        <span class="underlined">patience.<Squiggle class="under" animate /></span>
+      </h1>
+      <p class="lede">
+        One-on-one grooming on Main St E in Hamilton. Matted coats, double coats, nervous
+        first-timers, and cats who won't let you near their nails.
+      </p>
+      <div class="ctas">
+        <a class="btn btn-main" href={business.phoneHref}><Icon name="phone" />Call to book</a>
+        <a class="btn btn-alt" href={business.smsHref}><Icon name="chat" />Text us</a>
+      </div>
+      <a class="picker-link hand" href="#picker">
+        Not sure what to book? Try the pet picker <Icon name="arrow-right" size={20} />
+      </a>
+    </div>
+
+    <div class="photos">
+      <div class="badge"><span><b>{business.rating}★</b>{business.reviewCount} reviews</span></div>
+
+      <figure class="polaroid main">
+        <span class="tape dots"></span>
+        <Photo photo={photos.heroMain} width={420} eager sizes="(min-width: 900px) 420px, 80vw" />
+        <figcaption>Fresh out of the bath</figcaption>
+      </figure>
+
+      <figure class="polaroid second">
+        <span class="tape mint"></span>
+        <Photo photo={photos.heroSecond} width={200} ratio={1} />
+      </figure>
+
+      <p class="note hand" aria-hidden="true">so fresh,<br />so clean ♡</p>
+      <Arrow class="note-arrow" />
+
+      <Sparkle class="spark s1" />
+      <Sparkle class="spark s2" style="animation-delay:.8s" />
+      <Sparkle class="spark s3" style="animation-delay:1.6s" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    --edge: var(--bubble);
+    background: var(--paw-pattern) 0 0 / 120px 120px, var(--bubble);
+    padding: 30px 0 110px;
+    z-index: 1;
+  }
+  /* Bubbles sit behind the content; only the real content catches taps. */
+  .hero-grid { position: relative; z-index: 1; display: grid; gap: 40px; align-items: center; pointer-events: none; }
+  .copy > *, .photos { pointer-events: auto; }
+
+  .rating { text-decoration: none; }
+  .stars { color: #E0A100; letter-spacing: 1px; }
+
+  h1 {
+    font-size: clamp(50px, 13vw, 96px);
+    line-height: .95;
+    letter-spacing: -.02em;
+    margin: 20px 0 22px;
+  }
+  .underlined { position: relative; display: inline-block; white-space: nowrap; }
+  .under {
+    position: absolute; left: -2%; bottom: -.12em;
+    width: 104%; height: .26em;
+    color: var(--sun);
+    z-index: -1;
+  }
+
+  .lede { font-size: 19px; max-width: 37ch; }
+  .picker-link {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 25px; line-height: 1.1;
+    text-decoration: none;
+    color: var(--plum);
+  }
+  .picker-link :global(svg) { display: inline-block; vertical-align: -3px; margin-left: 4px; transition: translate .2s var(--bounce); }
+  .picker-link:hover :global(svg) { translate: 5px 0; }
+
+  .photos { position: relative; max-width: 420px; width: 100%; margin: 0 auto 10px; }
+  .main { rotate: 2.5deg; }
+  .main figcaption { text-align: left; padding-left: 16px; }
+  .main :global(img) { aspect-ratio: 4 / 5; height: auto; }
+  .second {
+    position: absolute; right: -22px; bottom: -40px;
+    width: 38%;
+    padding: 7px 7px 26px;
+    rotate: -7deg;
+  }
+  .second :global(img) { aspect-ratio: 1; height: auto; }
+  .second .tape { width: 60px; height: 22px; top: -10px; }
+
+  .badge {
+    position: absolute; top: -20px; left: -12px; z-index: 3;
+    width: 104px; height: 104px; border-radius: 50%;
+    background: var(--sun);
+    display: grid; place-items: center; text-align: center;
+    font-family: var(--display); font-weight: 600; font-size: 15px; line-height: 1.05;
+    rotate: -12deg;
+    box-shadow: var(--shadow-sm);
+    /* Stitched edge, like an embroidered patch */
+    outline: 2px dashed rgba(58, 29, 60, .35);
+    outline-offset: -8px;
+  }
+  .badge b { display: block; font-size: 30px; font-weight: 700; }
+
+  .note {
+    position: absolute; left: 4px; bottom: -64px;
+    font-size: 26px; line-height: .95; rotate: -6deg;
+  }
+  .note-arrow {
+    position: absolute; left: 104px; bottom: -58px;
+    width: 54px; rotate: 150deg; scale: -1 1;
+    color: var(--plum);
+  }
+
+  .spark { position: absolute; color: var(--paper); z-index: 3; }
+  .s1 { width: 26px; top: 10%; right: -18px; }
+  .s2 { width: 16px; top: 24%; right: -34px; color: var(--sun); }
+  .s3 { width: 20px; bottom: 36%; left: -26px; }
+
+  /* Page-load moment */
+  @media (prefers-reduced-motion: no-preference) {
+    .copy > * { animation: rise .7s cubic-bezier(.2, .8, .2, 1) both; }
+    .copy > :nth-child(2) { animation-delay: .06s; }
+    .copy > :nth-child(3) { animation-delay: .12s; }
+    .copy > :nth-child(4) { animation-delay: .18s; }
+    .copy > :nth-child(5) { animation-delay: .24s; }
+    .main { animation: drop .9s .15s cubic-bezier(.2, .9, .25, 1.2) both; }
+    .second { animation: drop2 .9s .35s cubic-bezier(.2, .9, .25, 1.2) both; }
+    .badge { animation: badge-pop .5s .75s var(--bounce) both; }
+    .note, .note-arrow { animation: rise .6s 1.1s both; }
+  }
+  @keyframes drop { from { opacity: 0; transform: rotate(10deg) translateY(-30px); } }
+  @keyframes drop2 { from { opacity: 0; transform: rotate(-10deg) translateY(30px); } }
+  @keyframes badge-pop { from { opacity: 0; transform: rotate(-30deg) scale(.3); } }
+
+  @media (min-width: 900px) {
+    .hero { padding: 54px 0 150px; }
+    .hero-grid { grid-template-columns: 1.15fr .85fr; }
+    .note { left: -128px; bottom: 170px; font-size: 30px; }
+    .note-arrow { left: -54px; bottom: 96px; width: 70px; rotate: -70deg; scale: 1; }
+  }
+</style>

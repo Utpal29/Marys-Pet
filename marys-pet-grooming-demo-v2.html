@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mary's Pet Grooming Studio | Dog & Cat Grooming, Main St E Hamilton</title>
+<meta name="description" content="One-on-one dog and cat grooming at 895 Main St E, Hamilton. Baths, haircuts, deshedding, mat removal, nail trims and first puppy grooms. Call or text 905-807-3453.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"PetGrooming","name":"Mary's Pet Grooming Studio","telephone":"+1-905-807-3453","address":{"@type":"PostalAddress","streetAddress":"895 Main St E","addressLocality":"Hamilton","addressRegion":"ON","postalCode":"L8M 1M4","addressCountry":"CA"},"openingHours":["Mo-Fr 09:00-15:00","Sa 09:00-17:00"],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"56"}}
+</script>
+<style>
+:root{
+  --plum:#3A1D3C; --plum-soft:#6B4A6D; --bubble:#F6C9DA; --bubble-deep:#EFA9C3;
+  --mint:#CDEBDD; --sun:#FFD45E; --paper:#FFFCFA; --line:#EADCE3;
+  --display:"Bricolage Grotesque","Arial Rounded MT Bold","Trebuchet MS",sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--body);color:var(--plum);background:var(--paper);line-height:1.6;font-size:17px;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px));overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--plum);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1;letter-spacing:-.03em;margin-bottom:14px}
+.sub{color:var(--plum-soft);max-width:46ch;margin-bottom:32px;font-size:18px}
+section{padding:72px 0}
+
+/* banner + header */
+.preview{background:var(--plum);color:var(--paper);font-size:13px;line-height:1.4;text-align:center;padding:8px 14px;padding-top:calc(8px + env(safe-area-inset-top,0px))}
+.preview b{color:var(--sun)}
+header{position:sticky;top:0;z-index:30;background:rgba(246,201,218,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;max-width:1120px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo svg{width:38px;height:38px;flex:none}
+.logo span{font-family:var(--display);font-weight:800;font-size:20px;line-height:1;letter-spacing:-.02em}
+.logo small{display:block;font-family:var(--body);font-weight:500;font-size:12px;color:var(--plum-soft);letter-spacing:0;margin-top:3px}
+.status{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;background:var(--paper);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.status i{width:8px;height:8px;border-radius:50%;background:#B9A5B9}
+.status.open i{background:#2E9E5B;box-shadow:0 0 0 3px rgba(46,158,91,.2)}
+.navlinks{display:none;gap:26px;font-weight:600;font-size:15px}
+.navlinks a{text-decoration:none}
+.navlinks a:hover{text-decoration:underline;text-underline-offset:4px}
+.nav .nav-call{display:none}
+
+/* hero */
+.hero{background:var(--bubble);position:relative;padding:28px 0 110px;overflow-x:clip}
+html{overflow-x:clip}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:40px;
+  background:radial-gradient(circle at 30px 0,var(--bubble) 29px,transparent 30px) 0 0/60px 40px repeat-x;}
+.hero-grid{display:grid;gap:34px;align-items:center}
+.rating{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border-radius:999px;padding:7px 14px 7px 12px;font-weight:700;font-size:14px}
+.stars{color:#E0A100;letter-spacing:1px}
+.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(50px,14vw,104px);line-height:.9;letter-spacing:-.04em;margin:20px 0 20px}
+.lede{font-size:19px;max-width:36ch}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:700;font-size:17px;text-decoration:none;padding:15px 24px;border-radius:999px;border:2px solid var(--plum);transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn svg{width:19px;height:19px;flex:none}
+.btn-main{background:var(--plum);color:var(--paper)}
+.btn-alt{background:var(--paper)}
+.hero-photo{position:relative;max-width:440px;margin:0 auto;width:100%}
+.hero-photo .frame{background:var(--paper);padding:12px 12px 48px;border-radius:14px;transform:rotate(2.5deg);box-shadow:0 18px 40px -18px rgba(58,29,60,.45)}
+.hero-photo img{aspect-ratio:4/5;object-fit:cover;border-radius:6px;width:100%}
+.hero-photo .caption{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-family:var(--display);font-weight:500;font-size:17px}
+.sticker{position:absolute;top:-18px;left:-10px;width:104px;height:104px;border-radius:50%;background:var(--sun);display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:15px;line-height:1.05;transform:rotate(-12deg);box-shadow:0 8px 20px -10px rgba(58,29,60,.5)}
+.sticker b{display:block;font-size:30px}
+.hero-photo .second{position:absolute;right:-8px;bottom:-26px;width:44%;background:var(--paper);padding:8px;border-radius:12px;transform:rotate(-6deg);box-shadow:0 14px 30px -14px rgba(58,29,60,.5)}
+.hero-photo .second img{aspect-ratio:1;border-radius:6px}
+
+/* load moment */
+@media (prefers-reduced-motion:no-preference){
+  .hero h1,.hero .lede,.hero .ctas{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+  .hero .lede{animation-delay:.08s}.hero .ctas{animation-delay:.16s}
+  .hero-photo .frame{animation:drop .9s .15s cubic-bezier(.2,.9,.25,1.2) both}
+  .hero-photo .second{animation:drop2 .9s .35s cubic-bezier(.2,.9,.25,1.2) both}
+  .sticker{animation:pop .5s .75s cubic-bezier(.3,1.6,.5,1) both}
+}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+@keyframes drop{from{opacity:0;transform:rotate(12deg) translateY(-30px)}}
+@keyframes drop2{from{opacity:0;transform:rotate(-16deg) translateY(30px)}}
+@keyframes pop{from{opacity:0;transform:rotate(-40deg) scale(.3)}}
+
+/* gallery */
+.gallery{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 16px;margin:0 -20px;scrollbar-width:none}
+.gallery::-webkit-scrollbar{display:none}
+.gallery figure{flex:0 0 72%;scroll-snap-align:start;position:relative}
+.gallery img{aspect-ratio:4/5;object-fit:cover;border-radius:18px;width:100%}
+.gallery figcaption{position:absolute;left:12px;bottom:12px;background:var(--paper);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700}
+.swipe{font-size:14px;color:var(--plum-soft);margin-top:4px}
+
+/* reviews */
+.reviews{background:var(--plum);color:var(--paper);border-radius:32px;margin:0 12px}
+.reviews h2{color:var(--paper)}
+.reviews .sub{color:#D9C6DA}
+.big-quote{font-family:var(--display);font-weight:500;font-size:clamp(26px,5.4vw,42px);line-height:1.15;letter-spacing:-.015em;max-width:24ch;margin-bottom:10px}
+.big-cite{color:var(--bubble);font-weight:600;margin-bottom:40px}
+.rev-grid{display:grid;gap:14px}
+.rev{background:rgba(255,252,250,.07);border:1.5px solid rgba(255,252,250,.14);border-radius:20px;padding:20px;display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:start}
+.rev img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--bubble)}
+.rev p{font-size:17px;line-height:1.45}
+.rev cite{display:block;font-style:normal;font-size:14px;color:#D9C6DA;margin-top:6px}
+.rev .stars{font-size:13px;display:block;margin-bottom:4px}
+.gl{display:inline-flex;margin-top:28px;color:var(--sun);font-weight:700}
+
+/* services */
+.svc-grid{display:grid;gap:14px}
+.svc{border-radius:22px;padding:22px;background:var(--mint);position:relative;overflow:hidden}
+.svc:nth-child(3n+2){background:var(--bubble)}
+.svc:nth-child(3n){background:#FBE7B4}
+.svc h3{font-family:var(--display);font-weight:800;font-size:23px;letter-spacing:-.015em;line-height:1.1;margin-bottom:6px}
+.svc p{color:var(--plum-soft);font-size:16px;max-width:40ch}
+.svc.photo{padding:0;display:grid;grid-template-rows:180px auto;background:var(--paper);border:1.5px solid var(--line)}
+.svc.photo img{width:100%;height:100%;object-fit:cover}
+.svc.photo div{padding:18px 20px 22px}
+.cats{display:grid;gap:0;background:var(--sun);border-radius:26px;overflow:hidden;margin-top:18px}
+.cats img{width:100%;height:240px;object-fit:cover}
+.cats div{padding:26px 24px}
+.cats h3{font-family:var(--display);font-weight:800;font-size:32px;letter-spacing:-.02em;line-height:1;margin-bottom:8px}
+.price-note{margin-top:22px;font-size:16px;color:var(--plum-soft)}
+
+/* steps */
+.steps{list-style:none;display:grid;gap:14px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start;padding:18px 0;border-top:1.5px solid var(--line)}
+.steps li::before{content:counter(s);width:52px;height:52px;border-radius:50%;background:var(--bubble);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:24px}
+.steps h3{font-family:var(--display);font-size:21px;font-weight:800;line-height:1.2;margin-bottom:2px}
+.steps p{color:var(--plum-soft)}
+
+/* faq */
+.faq details{border-top:1.5px solid var(--line)}
+.faq details:last-child{border-bottom:1.5px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 44px 20px 0;font-family:var(--display);font-weight:800;font-size:20px;line-height:1.25;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:var(--bubble);display:grid;place-items:center;font-size:20px;transition:transform .2s}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq details p{padding:0 0 22px;color:var(--plum-soft);max-width:60ch}
+
+/* visit */
+.visit-grid{display:grid;gap:30px}
+.hours{width:100%;border-collapse:collapse;font-size:17px}
+.hours td{padding:11px 4px;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font-weight:700}
+.hours tr.today td{background:var(--bubble);font-weight:700}
+.hours tr.today td:first-child{border-radius:10px 0 0 10px;padding-left:12px}
+.hours tr.today td:last-child{border-radius:0 10px 10px 0;padding-right:12px}
+.map{border-radius:22px;overflow:hidden;border:1.5px solid var(--line);aspect-ratio:4/3;background:var(--mint)}
+.map iframe{width:100%;height:100%;border:0;display:block}
+.addr{font-size:19px;margin:16px 0 6px;font-weight:600}
+.small{font-size:15px;color:var(--plum-soft)}
+
+/* closing */
+.closing{background:var(--bubble);text-align:center;padding:80px 0 70px;position:relative;margin-top:40px}
+.closing::before{content:"";position:absolute;left:0;right:0;top:-39px;height:40px;
+  background:radial-gradient(circle at 30px 40px,var(--bubble) 29px,transparent 30px) 0 0/60px 40px repeat-x}
+.closing h2{max-width:14ch;margin:0 auto 12px}
+.closing .ctas{justify-content:center}
+footer{background:var(--plum);color:#D9C6DA;font-size:14px;padding:28px 0 36px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+footer a{color:var(--paper)}
+
+/* sticky mobile bar */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,252,250,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1.5px solid var(--line)}
+.bar a{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;text-decoration:none;padding:14px;border-radius:999px;border:2px solid var(--plum)}
+.bar a:first-child{background:var(--plum);color:var(--paper)}
+.bar svg{width:18px;height:18px}
+
+@media (min-width:560px){
+  .gallery figure{flex-basis:44%}
+  .svc-grid{grid-template-columns:1fr 1fr}
+}
+@media (min-width:900px){
+  body{padding-bottom:0}
+  .bar{display:none}
+  .navlinks{display:flex}
+  .nav .nav-call{display:inline-flex;padding:10px 18px;font-size:15px}
+  .hero{padding:48px 0 140px}
+  .hero-grid{grid-template-columns:1.15fr .85fr}
+  .gallery{margin:0;padding:6px 0 16px}
+  .gallery figure{flex-basis:calc(25% - 11px)}
+  .swipe{display:none}
+  .reviews{margin:0 24px}
+  .rev-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-grid{grid-template-columns:repeat(3,1fr)}
+  .svc.photo{grid-row:span 2;grid-template-rows:1fr auto}
+  .cats{grid-template-columns:1fr 1fr;align-items:center}
+  .cats img{height:100%;min-height:300px}
+  .cats div{padding:40px}
+  .two{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px}
+  .steps{grid-template-columns:repeat(3,1fr);gap:28px}
+  .steps li{grid-template-columns:1fr;gap:12px}
+  .visit-grid{grid-template-columns:.8fr 1.2fr;gap:50px;align-items:start}
+}
+</style>
+</head>
+<body>
+
+<div class="preview"><b>Preview design</b> for Mary's Pet Grooming Studio. Photos are placeholders until we add yours.</div>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="#top" aria-label="Mary's Pet Grooming Studio, home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#3A1D3C"/><g fill="#F6C9DA"><ellipse cx="20" cy="25" rx="7" ry="6"/><circle cx="11.5" cy="17" r="3.2"/><circle cx="17" cy="12" r="3.2"/><circle cx="23" cy="12" r="3.2"/><circle cx="28.5" cy="17" r="3.2"/></g></svg>
+      <span>Mary's<small>Pet Grooming Studio</small></span>
+    </a>
+    <nav class="navlinks" aria-label="Sections">
+      <a href="#services">Services</a><a href="#reviews">Reviews</a><a href="#faq">FAQ</a><a href="#visit">Hours &amp; map</a>
+    </nav>
+    <span class="status" id="status"><i></i><span>Hours</span></span>
+    <a class="btn btn-main nav-call" href="tel:+19058073453">Call 905-807-3453</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <a class="rating" href="#reviews"><span class="stars" aria-hidden="true">★★★★★</span> 4.9 from 56 Google reviews</a>
+        <h1>Dogs and cats, groomed with patience.</h1>
+        <p class="lede">One-on-one grooming on Main St E in Hamilton. Matted coats, double coats, nervous first-timers, and cats who won't let you near their nails.</p>
+        <div class="ctas">
+          <a class="btn btn-main" href="tel:+19058073453"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Call to book</a>
+          <a class="btn btn-alt" href="sms:+19058073453"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text us</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <div class="sticker"><span><b>4.9★</b>56 reviews</span></div>
+        <div class="frame">
+          <img src="https://images.unsplash.com/photo-1611173622933-91942d394b04?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="Freshly bathed Pomeranian wrapped in a pink towel">
+          <span class="caption">Fresh out of the bath</span>
+        </div>
+        <div class="second"><img src="https://images.unsplash.com/photo-1719464454959-9cf304ef4774?fm=jpg&q=70&w=500&auto=format&fit=crop" alt="Small white dog getting a scissor trim"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Photo gallery" style="padding-bottom:40px">
+    <div class="wrap">
+      <h2>Fresh from the table</h2>
+      <p class="sub">Soft coats, tidy faces, happy tails.</p>
+      <div class="gallery">
+        <figure><img loading="lazy" src="https://images.unsplash.com/photo-1625277743460-43716b93507a?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Black poodle with a neat trim"><figcaption>Poodle trim</figcaption></figure>
+        <figure><img loading="lazy" src="https://images.unsplash.com/photo-1616032776175-77c09e280ad8?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Yorkshire terrier puppy"><figcaption>Puppy's first groom</figcaption></figure>
+        <figure><img loading="lazy" src="https://images.unsplash.com/photo-1581887936036-3f4f7f0b6679?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Long-coated dog drying on a blue towel"><figcaption>Bath and dry</figcaption></figure>
+        <figure><img loading="lazy" src="https://images.unsplash.com/photo-1678153188688-0dc45722708a?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Small dog in a green bandana after a groom"><figcaption>All done</figcaption></figure>
+        <figure><img loading="lazy" src="https://images.unsplash.com/photo-1763477892773-d6011a9146df?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Fluffy long-haired cat"><figcaption>Cats welcome</figcaption></figure>
+        <figure><img loading="lazy" src="https://images.unsplash.com/photo-1709777571247-39ad71a2d86e?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Small white dog sitting against a pink wall"><figcaption>Fluffed and finished</figcaption></figure>
+      </div>
+      <p class="swipe">Swipe for more</p>
+    </div>
+  </section>
+
+  <section class="reviews" id="reviews">
+    <div class="wrap">
+      <h2>Hamilton pet parents love Mary</h2>
+      <p class="sub">4.9 stars from 56 reviews on Google.</p>
+      <p class="big-quote">“She fit him in same day and performed a miracle on him.”</p>
+      <p class="big-cite">Gizmo's owner, after a home haircut went wrong</p>
+      <div class="rev-grid">
+        <div class="rev"><img loading="lazy" src="https://images.unsplash.com/photo-1763477892773-d6011a9146df?fm=jpg&q=60&w=160&h=160&auto=format&fit=crop" alt=""><div><span class="stars" aria-label="5 stars">★★★★★</span><p>“Less than an hour my Jade was back to being her beautiful self.”</p><cite>Jade's owner, long-haired cat</cite></div></div>
+        <div class="rev"><img loading="lazy" src="https://images.unsplash.com/photo-1616032776175-77c09e280ad8?fm=jpg&q=60&w=160&h=160&auto=format&fit=crop" alt=""><div><span class="stars" aria-label="5 stars">★★★★★</span><p>“Mary by far exceeded my expectations and relieved my anxiety.”</p><cite>Stanley's owner, Yorkie's first groom</cite></div></div>
+        <div class="rev"><img loading="lazy" src="https://images.unsplash.com/photo-1581887936036-3f4f7f0b6679?fm=jpg&q=60&w=160&h=160&auto=format&fit=crop" alt=""><div><span class="stars" aria-label="5 stars">★★★★★</span><p>“Always comes home so soft, handsome and comfortable!”</p><cite>Bernese/Pyrenees owner</cite></div></div>
+        <div class="rev"><img loading="lazy" src="https://images.unsplash.com/photo-1625277743460-43716b93507a?fm=jpg&q=60&w=160&h=160&auto=format&fit=crop" alt=""><div><span class="stars" aria-label="5 stars">★★★★★</span><p>“10/10 customer service.”</p><cite>Standard Poodle owner</cite></div></div>
+      </div>
+      <a class="gl" href="https://www.google.com/maps/search/?api=1&query=Mary%27s+Pet+Grooming+Studio+895+Main+St+E+Hamilton" target="_blank" rel="noopener">Read all reviews on Google</a>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <h2>What Mary does</h2>
+      <p class="sub">Every groom is one-on-one, so your pet isn't stuck in a busy, noisy room.</p>
+      <div class="svc-grid">
+        <div class="svc photo"><img loading="lazy" src="https://images.unsplash.com/photo-1719464454959-9cf304ef4774?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Dog getting a scissor haircut"><div><h3>Haircuts and styling</h3><p>Breed trims, face and feet tidy-ups, and full haircuts for poodles, doodles, Shih Tzus and more.</p></div></div>
+        <div class="svc"><h3>Bath and brush-out</h3><p>A proper wash, dry and brush so they come home clean and fluffy.</p></div>
+        <div class="svc"><h3>Deshedding</h3><p>For double coats that shed everywhere, especially at the change of season.</p></div>
+        <div class="svc"><h3>Mat removal</h3><p>Gentle work on tangled, matted coats for dogs and long-haired cats.</p></div>
+        <div class="svc"><h3>Nail trims</h3><p>Quick trims for dogs and cats, including the ones that won't let you try at home.</p></div>
+        <div class="svc photo"><img loading="lazy" src="https://images.unsplash.com/photo-1616032776175-77c09e280ad8?fm=jpg&q=70&w=700&auto=format&fit=crop" alt="Yorkie puppy"><div><h3>First puppy grooms</h3><p>A calm first visit so young pups learn grooming isn't scary.</p></div></div>
+        <div class="svc"><h3>Ear care</h3><p>Ear cleaning and inner ear hair plucking.</p></div>
+        <div class="svc"><h3>Last-minute fixes</h3><p>Home haircut gone wrong? Call and ask about same-day openings.</p></div>
+      </div>
+      <div class="cats">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1763477892773-d6011a9146df?fm=jpg&q=70&w=900&auto=format&fit=crop" alt="Fluffy long-haired cat">
+        <div><h3>Yes, cats too.</h3><p>Plenty of groomers won't take cats. Mary does, from nail trims to full mat removal on long-haired kitties.</p>
+          <div class="ctas"><a class="btn btn-main" href="tel:+19058073453">Book a cat groom</a></div></div>
+      </div>
+      <p class="price-note">Pricing depends on your pet's size, coat and condition. Call or text for a quote.</p>
+    </div>
+  </section>
+
+  <section style="padding-top:20px">
+    <div class="wrap two">
+      <div><h2>How a visit works</h2><p class="sub">No online forms. Just reach out and Mary will sort out a time.</p></div>
+      <ol class="steps">
+        <li><div><h3>Call or text</h3><p>Tell Mary about your pet's breed, coat and anything she should know.</p></div></li>
+        <li><div><h3>Drop off</h3><p>Bring them to 895 Main St E at your appointment time.</p></div></li>
+        <li><div><h3>Pick up a happy pet</h3><p>Clean, soft, tidy, and usually pretty pleased with themselves.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:20px">
+    <div class="wrap two">
+      <div><h2>Questions</h2><p class="sub">Don't see yours? Just call or text.</p></div>
+      <div class="faq">
+        <details><summary>Do you groom cats?</summary><p>Yes. Mary grooms cats as well as dogs, including nail trims and mat removal for long-haired cats.</p></details>
+        <details><summary>My dog's coat is badly matted. Can you help?</summary><p>Yes. Mary works on matted and double coats regularly. Call so she can hear about the coat before your visit.</p></details>
+        <details><summary>My dog is nervous. Is this a good place for them?</summary><p>Grooms are one-on-one, and reviews often mention how calm anxious and first-time pets are with Mary.</p></details>
+        <details><summary>Can I get a same-day appointment?</summary><p>Sometimes. Call and ask. Mary has fit in last-minute fixes before when her schedule allows.</p></details>
+        <details><summary>How much does a groom cost?</summary><p>It depends on size, coat and condition. Call or text with your pet's breed for a quote.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit" style="padding-top:20px">
+    <div class="wrap visit-grid">
+      <div>
+        <h2>Hours</h2>
+        <table class="hours" id="hours">
+          <tr data-d="1"><td>Monday</td><td>9 am – 3 pm</td></tr>
+          <tr data-d="2"><td>Tuesday</td><td>9 am – 3 pm</td></tr>
+          <tr data-d="3"><td>Wednesday</td><td>9 am – 3 pm</td></tr>
+          <tr data-d="4"><td>Thursday</td><td>9 am – 3 pm</td></tr>
+          <tr data-d="5"><td>Friday</td><td>9 am – 3 pm</td></tr>
+          <tr data-d="6"><td>Saturday</td><td>9 am – 5 pm</td></tr>
+          <tr data-d="0"><td>Sunday</td><td>Closed</td></tr>
+        </table>
+        <p class="addr">895 Main St E, Hamilton, ON L8M 1M4</p>
+        <p class="small">Right on Main St E, easy by car or HSR bus. Formerly Jake's Grooming Studio.</p>
+        <div class="ctas"><a class="btn btn-alt" href="https://www.google.com/maps/dir/?api=1&destination=Mary%27s+Pet+Grooming+Studio+895+Main+St+E+Hamilton" target="_blank" rel="noopener">Get directions</a></div>
+      </div>
+      <div class="map"><iframe title="Map to Mary's Pet Grooming Studio" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Mary%27s+Pet+Grooming+Studio,+895+Main+St+E,+Hamilton,+ON&output=embed"></iframe></div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <h2>Book your pet's next groom</h2>
+      <p class="sub" style="margin:0 auto">Call or text Mary at 905-807-3453.</p>
+      <div class="ctas">
+        <a class="btn btn-main" href="tel:+19058073453">Call now</a>
+        <a class="btn btn-alt" href="sms:+19058073453">Send a text</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Mary's Pet Grooming Studio, 895 Main St E, Hamilton, ON</span>
+    <a href="tel:+19058073453">905-807-3453</a>
+  </div>
+</footer>
+
+<nav class="bar" aria-label="Contact">
+  <a href="tel:+19058073453"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Call</a>
+  <a href="sms:+19058073453"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text</a>
+</nav>
+
+<script>
+(function(){
+  // Hours in Hamilton (America/Toronto): [open, close] in minutes, null = closed
+  var H={0:null,1:[540,900],2:[540,900],3:[540,900],4:[540,900],5:[540,900],6:[540,1020]};
+  var names=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var now;
+  try{ now=new Date(new Date().toLocaleString("en-US",{timeZone:"America/Toronto"})); }catch(e){ now=new Date(); }
+  var d=now.getDay(), m=now.getHours()*60+now.getMinutes();
+  var row=document.querySelector('#hours tr[data-d="'+d+'"]'); if(row) row.className="today";
+  function fmt(x){var h=Math.floor(x/60),mm=x%60,ap=h>=12?"pm":"am";h=h%12||12;return h+(mm?":"+String(mm).padStart(2,"0"):"")+" "+ap;}
+  var el=document.getElementById("status"), txt=el.querySelector("span");
+  var t=H[d];
+  if(t && m>=t[0] && m<t[1]){ el.classList.add("open"); txt.textContent="Open until "+fmt(t[1]); }
+  else {
+    for(var i=0;i<8;i++){
+      var dd=(d+i)%7, tt=H[dd];
+      if(tt && (i>0 || m<tt[0])){ txt.textContent="Opens "+(i===0?"today":i===1?"tomorrow":names[dd])+" "+fmt(tt[0]); break; }
+    }
+  }
+})();
+</script>
+</body>
+</html>

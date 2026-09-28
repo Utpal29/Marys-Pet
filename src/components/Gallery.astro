@@ -1,0 +1,64 @@
+---
+import { gallery } from '../data/site';
+import Photo from './Photo.astro';
+import Sparkle from './doodles/Sparkle.astro';
+
+const tapes = ['', 'mint', 'sun dots', 'lilac', 'dots', 'sun', 'mint dots', 'lilac'];
+const tilts = [-3, 2, -1.5, 3, 2.5, -2, 1.5, -3];
+---
+<section class="gallery-section" aria-labelledby="gallery-title">
+  <div class="wrap">
+    <h2 id="gallery-title">Fresh from the tub <Sparkle class="title-spark" /></h2>
+    <p class="sub">Soft coats, tidy faces, happy tails.</p>
+
+    <ul class="wall">
+      {gallery.map((p, i) => (
+        <li style={`--tilt:${tilts[i % tilts.length]}deg`}>
+          <figure class="polaroid">
+            <span class:list={['tape', tapes[i % tapes.length]]}></span>
+            <Photo photo={p} width={280} sizes="(min-width: 900px) 260px, (min-width: 560px) 42vw, 68vw" />
+            <figcaption>{p.caption}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <p class="swipe hand" aria-hidden="true">swipe for more →</p>
+  </div>
+</section>
+
+<style>
+  .gallery-section { padding-top: 90px; padding-bottom: 40px; }
+  h2 { display: flex; align-items: center; gap: 12px; }
+  .title-spark { width: 30px; color: var(--sun); flex: none; }
+
+  .wall {
+    list-style: none;
+    display: flex; gap: 22px;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    padding: 24px 20px 30px; margin: 0 -20px;
+    scrollbar-width: none;
+  }
+  .wall::-webkit-scrollbar { display: none; }
+  .wall li { flex: 0 0 68%; scroll-snap-align: center; }
+  .polaroid {
+    rotate: var(--tilt);
+    transition: rotate .3s var(--bounce), scale .3s var(--bounce), box-shadow .3s;
+  }
+  .polaroid :global(img) { aspect-ratio: 4 / 5; height: auto; }
+  .polaroid figcaption { font-size: 23px; }
+  .polaroid:hover { rotate: 0deg; scale: 1.04; box-shadow: 0 26px 50px -20px rgba(58, 29, 60, .5); z-index: 2; }
+
+  .swipe { font-size: 22px; color: var(--plum-soft); text-align: right; margin-top: -6px; }
+
+  @media (min-width: 560px) {
+    .wall li { flex-basis: 42%; }
+  }
+  @media (min-width: 900px) {
+    .wall {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 34px 28px; overflow: visible; padding: 20px 0 10px; margin: 0;
+    }
+    .wall li:nth-child(even) { translate: 0 22px; }
+    .swipe { display: none; }
+  }
+</style>

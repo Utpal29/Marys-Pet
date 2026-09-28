@@ -1,0 +1,98 @@
+---
+import { business, photos } from '../data/site';
+import poodleWhite from '../assets/stickers/poodle-white.png';
+import Photo from './Photo.astro';
+import Sticker from './Sticker.astro';
+import Heart from './doodles/Heart.astro';
+
+// Only things we actually know from the business listing and reviews. Mary can add her own fun facts.
+const facts = [
+  { k: 'Grooms', v: 'Dogs and cats' },
+  { k: 'Style', v: 'One pet at a time' },
+  { k: 'Good with', v: 'Nervous first-timers, matted coats, last-minute rescues' },
+  { k: 'Rating', v: `${business.rating} ★ from ${business.reviewCount} Google reviews` },
+  { k: 'Find her', v: `${business.street}, ${business.city}` },
+];
+---
+<section class="meet" id="meet-mary" aria-labelledby="meet-title">
+  <div class="wrap grid">
+    <figure class="polaroid portrait">
+      <span class="tape sun"></span>
+      <Photo photo={photos.meetMary} width={420} ratio={1.15} sizes="(min-width: 900px) 400px, 84vw" />
+      <figcaption>Your photo here, Mary! <Heart class="cap-heart" /></figcaption>
+    </figure>
+
+    <div class="copy">
+      <h2 id="meet-title">Meet Mary</h2>
+      <!-- Placeholder bio built from the listing and reviews. Replace with Mary's own words. -->
+      <p class="lead">
+        Mary's Pet Grooming Studio is a one-groomer shop on Main St E. No assembly line and no room full of
+        barking dogs. Just Mary, your pet, and as much time as the groom needs.
+      </p>
+      <p>
+        Pet parents keep mentioning the same things: she's patient with nervous first-timers, she isn't scared
+        of a matted coat, and she's happy to take cats. The studio was formerly {business.formerly}.
+      </p>
+
+      <div class="id-card">
+        <div class="id-head">
+          <span class="hole" aria-hidden="true"></span>
+          <span>Groomer ID</span>
+        </div>
+        <dl>
+          <div class="name"><dt>Name</dt><dd>Mary</dd></div>
+          {facts.map((f) => <div><dt>{f.k}</dt><dd>{f.v}</dd></div>)}
+        </dl>
+        <Sticker src={poodleWhite} width={120} class="id-sticker" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; gap: 50px; align-items: center; }
+  .portrait { max-width: 400px; width: 88%; margin: 0 auto; rotate: -3deg; }
+  .portrait :global(img) { aspect-ratio: 1 / 1.15; height: auto; }
+  .portrait figcaption { display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .cap-heart { width: 22px; color: var(--bubble-deep); }
+
+  .lead { font-size: 20px; margin-bottom: 14px; }
+  .copy p { max-width: 52ch; }
+  .copy > p:not(.lead) { color: var(--plum-soft); }
+
+  .id-card {
+    position: relative;
+    margin-top: 34px;
+    max-width: 440px;
+    background: var(--paper);
+    border: 3px solid var(--plum);
+    border-radius: 22px;
+    box-shadow: 0 8px 0 var(--plum);
+    overflow: visible;
+    rotate: 1.5deg;
+  }
+  .id-head {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--plum); color: var(--paper);
+    border-radius: 18px 18px 0 0;
+    padding: 10px 18px;
+    font-family: var(--display); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 14px;
+  }
+  .hole { width: 26px; height: 9px; border-radius: 9px; background: var(--paper); }
+  dl { padding: 14px 18px 18px; display: grid; gap: 8px; }
+  dl div { display: grid; grid-template-columns: 90px 1fr; gap: 10px; font-size: 15px; line-height: 1.35; }
+  dl div:not(:last-child) { border-bottom: 1.5px dashed var(--line); padding-bottom: 8px; }
+  dt { font-weight: 700; color: var(--plum-soft); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; padding-top: 2px; }
+  dd { font-weight: 600; }
+  .name dd { font-family: var(--hand); font-size: 34px; line-height: .9; }
+  /* On phones the pup sits on top of the card; on desktop it hangs off the side. */
+  .id-card { margin-top: 90px; }
+  .id-sticker { position: absolute; right: 12px; top: -112px; width: 74px; rotate: 8deg; }
+
+  @media (min-width: 900px) {
+    .grid { grid-template-columns: .9fr 1.1fr; gap: 80px; }
+    .portrait { width: 100%; }
+    .id-card { margin-top: 34px; }
+    .id-sticker { width: 124px; right: -70px; top: auto; bottom: -40px; }
+  }
+</style>

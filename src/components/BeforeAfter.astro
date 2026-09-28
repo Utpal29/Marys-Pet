@@ -1,0 +1,175 @@
+---
+import { beforeAfter } from '../data/site';
+import { unsplash, unsplashSrcset } from '../lib/unsplash';
+import Paw from './doodles/Paw.astro';
+
+const W = 560;
+const RATIO = 1.2;
+const img = (id: string) => ({
+  src: unsplash(id, W, Math.round(W * RATIO)),
+  srcset: unsplashSrcset(id, [320, W, 840, 1120], RATIO),
+});
+const pairs = beforeAfter.map((p) => ({
+  label: p.label,
+  before: { ...img(p.before.id), alt: p.before.alt },
+  after: { ...img(p.after.id), alt: p.after.alt },
+}));
+const first = pairs[0];
+---
+<section class="ba" aria-labelledby="ba-title">
+  <div class="wrap ba-grid">
+    <div class="ba-copy">
+      <h2 id="ba-title">From shaggy to snuggly</h2>
+      <p class="sub">
+        Overgrown, tangled, can't see where they're going? Drag the paw to see what a proper groom does.
+      </p>
+      {pairs.length > 1 && (
+        <div class="tabs" role="group" aria-label="Choose a before and after">
+          {pairs.map((p, i) => (
+            <button type="button" class="tab" aria-pressed={i === 0 ? 'true' : 'false'} data-pair={i}>
+              {p.label}
+            </button>
+          ))}
+        </div>
+      )}
+      <p class="demo-note hand">Stand-in photos for the demo. Mary's real before &amp; afters go here!</p>
+    </div>
+
+    <div class="frame" data-ba data-pairs={JSON.stringify(pairs)} style="--pos:50%">
+      <img class="after" data-after src={first.after.src} srcset={first.after.srcset} sizes="(min-width: 900px) 560px, 92vw" width={W} height={Math.round(W * RATIO)} alt={first.after.alt} loading="lazy" decoding="async" />
+      <div class="before-clip">
+        <img class="before" data-before src={first.before.src} srcset={first.before.srcset} sizes="(min-width: 900px) 560px, 92vw" width={W} height={Math.round(W * RATIO)} alt={first.before.alt} loading="lazy" decoding="async" />
+      </div>
+      <span class="tag tag-before hand">before</span>
+      <span class="tag tag-after hand">after ✨</span>
+      <div class="handle" aria-hidden="true">
+        <span class="knob"><Paw /></span>
+      </div>
+      <input class="range" type="range" min="0" max="100" value="50" step="1" aria-label="Slide to compare before and after" />
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ba]').forEach((frame) => {
+    const range = frame.querySelector<HTMLInputElement>('.range')!;
+    const set = (v: number) => frame.style.setProperty('--pos', `${v}%`);
+    range.addEventListener('input', () => set(Number(range.value)));
+
+    // Swap between before/after pairs.
+    const pairs = JSON.parse(frame.dataset.pairs ?? '[]');
+    const beforeImg = frame.querySelector<HTMLImageElement>('[data-before]')!;
+    const afterImg = frame.querySelector<HTMLImageElement>('[data-after]')!;
+    const tabs = frame.closest('section')?.querySelectorAll<HTMLButtonElement>('[data-pair]') ?? [];
+    tabs.forEach((tab) =>
+      tab.addEventListener('click', () => {
+        const p = pairs[Number(tab.dataset.pair)];
+        Object.assign(beforeImg, { src: p.before.src, srcset: p.before.srcset, alt: p.before.alt });
+        Object.assign(afterImg, { src: p.after.src, srcset: p.after.srcset, alt: p.after.alt });
+        tabs.forEach((t) => t.setAttribute('aria-pressed', String(t === tab)));
+        range.value = '50';
+        set(50);
+      }),
+    );
+
+    // A little nudge the first time it scrolls into view, so people know it moves.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        frame.classList.add('nudge');
+        frame.addEventListener('animationend', () => frame.classList.remove('nudge'), { once: true });
+      },
+      { threshold: 0.6 },
+    );
+    io.observe(frame);
+  });
+</script>
+
+<style>
+  .ba { padding-top: 70px; }
+  .ba-grid { display: grid; gap: 30px; align-items: center; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  .tab {
+    font-family: var(--display); font-weight: 600; font-size: 16px;
+    padding: 10px 18px; border-radius: 999px;
+    border: 2px solid var(--plum); background: var(--paper);
+    transition: background .2s, transform .2s var(--bounce);
+  }
+  .tab:hover { transform: translateY(-2px); }
+  .tab[aria-pressed="true"] { background: var(--plum); color: var(--paper); }
+  .demo-note { font-size: 21px; color: var(--plum-soft); line-height: 1.15; max-width: 30ch; }
+
+  .frame {
+    position: relative;
+    border-radius: 28px;
+    overflow: hidden;
+    aspect-ratio: 5 / 6;
+    border: 6px solid var(--paper);
+    box-shadow: var(--shadow), 0 0 0 2px var(--line);
+    background: var(--mint);
+    touch-action: pan-y;
+    user-select: none;
+  }
+  .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .before-clip {
+    position: absolute; inset: 0;
+    clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+  }
+  .tag {
+    position: absolute; top: 14px;
+    background: var(--paper); border-radius: 999px;
+    padding: 2px 14px 4px;
+    font-size: 24px; line-height: 1.1;
+    box-shadow: var(--shadow-sm);
+    pointer-events: none;
+  }
+  .tag-before { left: 14px; rotate: -4deg; }
+  .tag-after { right: 14px; rotate: 3deg; background: var(--sun); }
+
+  .handle {
+    position: absolute; top: 0; bottom: 0; left: var(--pos);
+    width: 4px; translate: -50% 0;
+    background: var(--paper);
+    box-shadow: 0 0 0 1px rgba(58, 29, 60, .15);
+    pointer-events: none;
+  }
+  .knob {
+    position: absolute; top: 50%; left: 50%; translate: -50% -50%;
+    width: 58px; height: 58px; border-radius: 50%;
+    background: var(--bubble); color: var(--plum);
+    border: 4px solid var(--paper);
+    box-shadow: var(--shadow-sm);
+    display: grid; place-items: center;
+    transition: scale .2s var(--bounce);
+  }
+  .knob :global(svg) { width: 28px; }
+  .frame:hover .knob { scale: 1.08; }
+  .frame:has(.range:focus-visible) .knob { outline: 3px solid var(--plum); outline-offset: 3px; }
+
+  /* The real control: a full-size, invisible range input */
+  .range {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; cursor: ew-resize; margin: 0;
+    -webkit-appearance: none; appearance: none;
+  }
+
+  .nudge .before-clip, .nudge .handle { animation: nudge 1.6s ease-in-out; }
+  .nudge .before-clip { animation-name: nudge-clip; }
+  @keyframes nudge {
+    0%, 100% { left: 50%; }
+    30% { left: 28%; }
+    65% { left: 70%; }
+  }
+  @keyframes nudge-clip {
+    0%, 100% { clip-path: inset(0 50% 0 0); }
+    30% { clip-path: inset(0 72% 0 0); }
+    65% { clip-path: inset(0 30% 0 0); }
+  }
+
+  @media (min-width: 900px) {
+    .ba-grid { grid-template-columns: .85fr 1.15fr; gap: 70px; }
+    .frame { aspect-ratio: 5 / 5.2; }
+  }
+</style>

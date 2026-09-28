@@ -1,0 +1,34 @@
+---
+// Responsive <img> for an Unsplash placeholder. Swap to astro:assets once Mary's own photos arrive.
+import { unsplash, unsplashSrcset } from '../lib/unsplash';
+import type { Photo as PhotoData } from '../data/site';
+
+interface Props {
+  photo: PhotoData;
+  /** Largest width the image is shown at, in CSS px. */
+  width: number;
+  /** Height / width. Defaults to 5:4 portrait. */
+  ratio?: number;
+  sizes?: string;
+  eager?: boolean;
+  alt?: string;
+  class?: string;
+  [attr: `data-${string}`]: string | undefined;
+}
+
+const { photo, width, ratio = 1.25, sizes, eager = false, alt, class: className, ...rest } = Astro.props;
+const widths = [...new Set([Math.round(width / 2), width, Math.round(width * 1.5), width * 2])];
+---
+<img
+  class={className}
+  src={unsplash(photo.id, width, Math.round(width * ratio))}
+  srcset={unsplashSrcset(photo.id, widths, ratio)}
+  sizes={sizes ?? `${width}px`}
+  width={width}
+  height={Math.round(width * ratio)}
+  alt={alt ?? photo.alt}
+  loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : undefined}
+  decoding="async"
+  {...rest}
+/>

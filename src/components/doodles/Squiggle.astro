@@ -1,0 +1,15 @@
+---
+// Hand-drawn underline. Draws itself in when `animate` is set.
+interface Props { class?: string; animate?: boolean }
+const { class: className, animate = false } = Astro.props;
+---
+<svg class:list={['squiggle', className, { draw: animate }]} viewBox="0 0 300 24" fill="none" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M4 15C38 5 64 21 104 12S176 3 214 13s66 7 82-4" stroke="currentColor" stroke-width="7" stroke-linecap="round" pathLength="1" />
+</svg>
+
+<style>
+  .squiggle { overflow: visible; }
+  .draw path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .9s .5s cubic-bezier(.6, 0, .3, 1) forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .draw path { stroke-dashoffset: 0; } }
+</style>

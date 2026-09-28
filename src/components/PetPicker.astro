@@ -1,0 +1,305 @@
+---
+import { business } from '../data/site';
+import dogPeek from '../assets/stickers/dog-peek.png';
+import Icon from './Icon.astro';
+import Sticker from './Sticker.astro';
+
+const sizes = [
+  { value: 'tiny', label: 'Tiny', hint: 'lap-sized' },
+  { value: 'medium', label: 'Medium', hint: 'couch hog' },
+  { value: 'big', label: 'Big fluff', hint: 'takes the whole bed' },
+];
+const coats = [
+  { value: 'short', label: 'Short hair', hint: 'sleek' },
+  { value: 'long', label: 'Long hair', hint: 'floof' },
+];
+const needs = [
+  { value: 'tidy', label: 'Just a bath & tidy-up', kinds: 'dog' },
+  { value: 'bath', label: 'A bath & brush-out', kinds: 'cat' },
+  { value: 'haircut', label: 'Due for a haircut', kinds: 'dog' },
+  { value: 'matted', label: 'Matted or tangled', kinds: 'dog cat' },
+  { value: 'shedding', label: 'Shedding everywhere', kinds: 'dog cat' },
+  { value: 'nails', label: 'Just nails, please', kinds: 'dog cat' },
+];
+---
+<section class="picker-section" id="picker" aria-labelledby="picker-title">
+  <div class="wrap">
+    <div class="intro">
+      <h2 id="picker-title">Not sure what to book?</h2>
+      <p class="sub">Tap a few answers and we'll write the text to Mary for you.</p>
+    </div>
+
+    <div class="card-wrap">
+      <Sticker src={dogPeek} width={170} class="peek" />
+      <form class="card" data-picker autocomplete="off">
+        <fieldset class="step">
+          <legend><span class="num">1</span>Who's coming in?</legend>
+          <div class="chips big">
+            <label class="chip"><input type="radio" name="kind" value="dog" /><span><Icon name="dog" size={34} />Dog</span></label>
+            <label class="chip"><input type="radio" name="kind" value="cat" /><span><Icon name="cat" size={34} />Cat</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="step" data-show="dog" hidden>
+          <legend><span class="num">2</span>How big?</legend>
+          <div class="chips">
+            {sizes.map((s) => (
+              <label class="chip"><input type="radio" name="size" value={s.value} /><span>{s.label}<small>{s.hint}</small></span></label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="step" data-show="cat" hidden>
+          <legend><span class="num">2</span>What kind of coat?</legend>
+          <div class="chips">
+            {coats.map((c) => (
+              <label class="chip"><input type="radio" name="coat" value={c.value} /><span>{c.label}<small>{c.hint}</small></span></label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="step" data-step="need" hidden>
+          <legend><span class="num">3</span>What's going on with the coat?</legend>
+          <div class="chips">
+            {needs.map((n) => (
+              <label class="chip" data-kinds={n.kinds}><input type="radio" name="need" value={n.value} /><span>{n.label}</span></label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="step extras" data-step="extras" hidden>
+          <legend><span class="num">4</span>Almost done</legend>
+          <label class="field">
+            <span>Pet's name <small>(optional)</small></span>
+            <input type="text" name="name" maxlength="30" placeholder="e.g. Biscuit" />
+          </label>
+          <label class="check"><input type="checkbox" name="first" /><span>It's their first groom ever</span></label>
+        </fieldset>
+
+        <div class="result" data-result hidden aria-live="polite">
+          <p class="hand kicker">Mary would probably suggest… <span class="first-tag" data-first-tag hidden>first groom ♡</span></p>
+          <h3 data-title></h3>
+          <p class="desc" data-desc></p>
+          <p class="extras-line" data-extras></p>
+
+          <div class="phone">
+            <p class="to">To: Mary · {business.phone}</p>
+            <p class="msg" data-msg></p>
+          </div>
+
+          <div class="ctas">
+            <a class="btn btn-main" data-sms href={business.smsHref}><Icon name="chat" />Text this to Mary</a>
+            <button type="button" class="btn btn-alt" data-copy><Icon name="copy" /><span>Copy message</span></button>
+          </div>
+          <p class="fine">Mary will confirm timing and price once she hears about your pet.</p>
+          <button type="reset" class="restart"><Icon name="refresh" size={18} />Start over</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { business } from '../data/site';
+  import { isComplete, smsHref, smsMessage, suggest, type Answers } from '../lib/picker';
+
+  const form = document.querySelector<HTMLFormElement>('[data-picker]');
+  if (form) {
+    const $ = <T extends HTMLElement>(sel: string) => form.querySelector<T>(sel)!;
+    const result = $('[data-result]');
+    const copyBtn = $<HTMLButtonElement>('[data-copy]');
+
+    const read = (): Answers => {
+      const data = new FormData(form);
+      const get = (k: string) => (data.get(k) as string | null) ?? undefined;
+      return {
+        kind: get('kind') as Answers['kind'],
+        size: get('size') as Answers['size'],
+        coat: get('coat') as Answers['coat'],
+        need: get('need') as Answers['need'],
+        name: get('name'),
+        first: data.has('first'),
+      };
+    };
+
+    const reveal = (el: HTMLElement, show: boolean) => {
+      if (show && el.hidden) {
+        el.hidden = false;
+        el.classList.add('appear');
+      } else if (!show) {
+        el.hidden = true;
+      }
+    };
+
+    function update(e?: Event) {
+      const a = read();
+      const target = e?.target as HTMLInputElement | undefined;
+
+      // Switching dog <-> cat clears the answers that no longer apply.
+      if (target?.name === 'kind') {
+        form!.querySelectorAll<HTMLInputElement>('input[name="size"], input[name="coat"], input[name="need"]').forEach((i) => (i.checked = false));
+        Object.assign(a, { size: undefined, coat: undefined, need: undefined });
+      }
+
+      form!.querySelectorAll<HTMLElement>('[data-show]').forEach((el) => reveal(el, el.dataset.show === a.kind));
+      form!.querySelectorAll<HTMLElement>('[data-kinds]').forEach((el) => {
+        el.hidden = !a.kind || !el.dataset.kinds!.split(' ').includes(a.kind);
+      });
+      const sized = a.kind === 'dog' ? Boolean(a.size) : Boolean(a.coat);
+      reveal($('[data-step="need"]'), Boolean(a.kind && sized));
+      reveal($('[data-step="extras"]'), isComplete(a));
+
+      const s = suggest(a);
+      reveal(result, Boolean(s));
+      if (!s) return;
+      $('[data-title]').textContent = s.title;
+      $('[data-first-tag]').hidden = !a.first;
+      $('[data-desc]').textContent = s.text;
+      $('[data-extras]').textContent = s.extras.length ? `Good to add: ${s.extras.join(', ')}.` : '';
+      const msg = smsMessage(a);
+      $('[data-msg]').textContent = msg;
+      $<HTMLAnchorElement>('[data-sms]').href = smsHref(business.smsHref, msg);
+
+      // Scroll the next question into view on phones, where it may be below the fold.
+      if (target?.type === 'radio') {
+        const next = [...form!.querySelectorAll<HTMLElement>('.step:not([hidden]), [data-result]:not([hidden])')].pop();
+        if (next && next.getBoundingClientRect().top > innerHeight - 140) {
+          next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+
+    form.addEventListener('change', update);
+    form.addEventListener('input', (e) => {
+      if ((e.target as HTMLElement).matches('input[type="text"]')) update(e);
+    });
+    form.addEventListener('reset', () => requestAnimationFrame(() => {
+      update();
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+
+    copyBtn.addEventListener('click', async () => {
+      const label = copyBtn.querySelector('span')!;
+      try {
+        await navigator.clipboard.writeText($('[data-msg]').textContent ?? '');
+        label.textContent = 'Copied!';
+      } catch {
+        label.textContent = 'Copy failed';
+      }
+      setTimeout(() => (label.textContent = 'Copy message'), 2000);
+    });
+
+    update();
+  }
+</script>
+
+<style>
+  .picker-section {
+    background:
+      radial-gradient(circle, rgba(255, 255, 255, .65) 3px, transparent 3.5px) 0 0 / 26px 26px,
+      var(--lilac);
+    margin-top: 40px;
+  }
+  .intro { text-align: center; }
+  .intro .sub { margin-left: auto; margin-right: auto; }
+
+  .card-wrap { position: relative; max-width: 760px; margin: 118px auto 0; }
+  .peek { position: absolute; top: -104px; right: 10px; width: 120px; z-index: 0; rotate: 4deg; }
+
+  .card {
+    position: relative; z-index: 1;
+    background: var(--paper);
+    border: 3px solid var(--plum);
+    border-radius: 32px;
+    box-shadow: 0 10px 0 var(--plum);
+    padding: 26px 20px 30px;
+    display: grid; gap: 26px;
+  }
+
+  .step { border: 0; min-width: 0; }
+  .appear { animation: rise .45s cubic-bezier(.2, .8, .2, 1) both; }
+  legend {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--display); font-weight: 600; font-size: 22px; line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .num {
+    display: grid; place-items: center;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bubble); font-size: 17px; flex: none;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { position: relative; }
+  .chip[hidden] { display: none; }
+  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .chip span {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 12px 18px;
+    border: 2px solid var(--line); border-radius: 18px;
+    background: var(--paper);
+    font-weight: 700; font-size: 16px; line-height: 1.2; text-align: center;
+    transition: transform .2s var(--bounce), background .2s, border-color .2s;
+  }
+  .chip small { font-weight: 500; font-size: 13px; color: var(--plum-soft); }
+  .chip:hover span { transform: translateY(-2px); border-color: var(--bubble-deep); }
+  .chip input:checked + span {
+    background: var(--bubble); border-color: var(--plum);
+    transform: rotate(-2deg);
+  }
+  .chip input:focus-visible + span { outline: 3px solid var(--plum); outline-offset: 2px; }
+  .chips.big .chip { flex: 1; }
+  .chips.big .chip span { font-family: var(--display); font-size: 22px; font-weight: 600; padding: 16px; gap: 6px; }
+
+  .extras { display: grid; gap: 14px; }
+  .field { display: grid; gap: 6px; font-weight: 700; max-width: 320px; }
+  .field small { font-weight: 500; color: var(--plum-soft); }
+  .field input {
+    font: inherit; font-weight: 500;
+    padding: 12px 16px; border-radius: 14px;
+    border: 2px solid var(--line); background: #fff;
+  }
+  .field input:focus { outline: none; border-color: var(--plum); }
+  .check { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; }
+  .check input { width: 22px; height: 22px; accent-color: var(--plum); }
+
+  .result {
+    border-top: 2.5px dashed var(--line);
+    padding-top: 24px;
+  }
+  .kicker { font-size: 25px; color: var(--plum-soft); line-height: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .first-tag { font-family: var(--body); font-size: 13px; font-weight: 700; color: var(--plum); background: var(--sun); border-radius: 999px; padding: 4px 10px; rotate: -3deg; }
+  .result h3 { font-size: 32px; line-height: 1.05; margin: 6px 0 8px; }
+  .desc { max-width: 52ch; }
+  .extras-line { font-weight: 600; margin-top: 6px; }
+  .extras-line:empty { display: none; }
+
+  /* A little text-message preview */
+  .phone {
+    margin-top: 20px;
+    background: #F4EEF3;
+    border-radius: 22px;
+    padding: 14px 16px 18px;
+    max-width: 440px;
+  }
+  .to { font-size: 13px; font-weight: 700; color: var(--plum-soft); margin-bottom: 8px; }
+  .msg {
+    position: relative;
+    background: #3E8EF7; color: #fff;
+    padding: 10px 14px; border-radius: 20px 20px 6px 20px;
+    margin-left: 12%;
+    font-size: 16px; line-height: 1.4;
+  }
+  .fine { font-size: 14px; color: var(--plum-soft); margin-top: 16px; }
+  .restart {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 10px; border: 0; background: none;
+    font-weight: 700; text-decoration: underline; text-underline-offset: 3px;
+  }
+
+  @media (min-width: 700px) {
+    .card { padding: 36px 40px 40px; }
+    .card-wrap { margin-top: 160px; }
+    .peek { width: 170px; top: -150px; right: 40px; }
+  }
+</style>

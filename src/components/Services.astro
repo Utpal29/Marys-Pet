@@ -1,0 +1,139 @@
+---
+import { business, photos, services } from '../data/site';
+import catBlack from '../assets/stickers/cat-black.png';
+import shihtzu from '../assets/stickers/shihtzu.png';
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+import Sticker from './Sticker.astro';
+---
+<section id="services" aria-labelledby="services-title">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <h2 id="services-title">What Mary does</h2>
+        <p class="sub">Every groom is one-on-one, so your pet isn't stuck in a busy, noisy room.</p>
+      </div>
+      <Sticker src={shihtzu} width={130} class="head-sticker" />
+    </div>
+
+    <ul class="grid">
+      {services.map((s) => (
+        <li class:list={['card', { photo: s.photo }]}>
+          {s.photo && <Photo photo={s.photo} width={380} ratio={0.7} sizes="(min-width: 900px) 360px, (min-width: 560px) 45vw, 92vw" />}
+          {!s.photo && <Icon name={s.icon} size={130} class="ghost" />}
+          <div class="body">
+            <span class="badge"><Icon name={s.icon} size={26} /></span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </div>
+        </li>
+      ))}
+      <li class="card cta">
+        <a href="#picker">
+          <span class="hand">Not sure which one?</span>
+          <strong>Try the pet picker</strong>
+          <Icon name="arrow-right" size={28} class="cta-arrow" />
+        </a>
+      </li>
+    </ul>
+
+    <div class="cats">
+      <Sticker src={catBlack} width={190} class="cat-sticker" />
+      <Photo photo={photos.catGroom} width={560} ratio={0.8} sizes="(min-width: 900px) 540px, 92vw" class="cats-photo" />
+      <div class="cats-copy">
+        <h3>Yes, cats too.</h3>
+        <p>Plenty of groomers won't take cats. Mary does, from nail trims to full mat removal on long-haired kitties.</p>
+        <div class="ctas"><a class="btn btn-main" href={business.phoneHref}><Icon name="cat" />Book a cat groom</a></div>
+      </div>
+    </div>
+
+    <p class="price-note">Pricing depends on your pet's size, coat and condition. Call or text for a quote.</p>
+  </div>
+</section>
+
+<style>
+  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .head-sticker { width: 86px; flex: none; rotate: 8deg; margin-bottom: 26px; }
+
+  .grid { list-style: none; display: grid; gap: 16px; }
+  .card {
+    --bg: var(--mint);
+    background: var(--bg);
+    border-radius: 26px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s var(--bounce), box-shadow .3s;
+  }
+  .card:nth-child(3n + 2) { --bg: var(--bubble); }
+  .card:nth-child(3n) { --bg: var(--butter); }
+  .card:hover { transform: translateY(-4px) rotate(-.6deg); box-shadow: 0 16px 30px -18px rgba(58, 29, 60, .5); }
+  .card:hover .badge { animation: wiggle .6s ease-in-out; }
+
+  .body { padding: 22px 22px 24px; position: relative; }
+  .badge {
+    display: grid; place-items: center;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: var(--paper); color: var(--plum);
+    margin-bottom: 12px;
+    box-shadow: 0 3px 0 rgba(58, 29, 60, .15);
+  }
+  h3 { font-size: 24px; line-height: 1.1; margin-bottom: 6px; }
+  .card:not(.photo) .body { display: grid; grid-template-columns: 50px 1fr; column-gap: 16px; align-items: start; }
+  .card:not(.photo) .badge { grid-row: span 2; margin: 0; }
+  .card:not(.photo) h3 { align-self: center; margin: 12px 0 4px; }
+  .card p { color: var(--plum-soft); font-size: 16px; max-width: 40ch; }
+
+  /* Big faded icon in the corner so taller cards don't feel empty */
+  .ghost { position: absolute; right: -18px; bottom: -22px; color: var(--plum); opacity: .07; rotate: -12deg; stroke-width: 1.6; }
+
+  .card.cta { --bg: var(--plum); color: var(--paper); }
+  .cta a { display: flex; flex-direction: column; justify-content: center; gap: 2px; height: 100%; min-height: 150px; padding: 24px; text-decoration: none; }
+  .cta .hand { font-size: 26px; color: var(--bubble); line-height: 1; }
+  .cta strong { font-family: var(--display); font-weight: 600; font-size: 28px; line-height: 1.1; }
+  .cta-arrow { margin-top: 8px; transition: translate .25s var(--bounce); }
+  .cta:hover .cta-arrow { translate: 6px 0; }
+
+  .card.photo { background: var(--paper); border: 2px solid var(--line); }
+  .card.photo :global(img) { width: 100%; height: 190px; object-fit: cover; }
+  .card.photo .badge { position: absolute; top: -26px; left: 20px; margin: 0; background: var(--sun); }
+  .card.photo .body { padding-top: 34px; }
+
+  .cats {
+    position: relative;
+    display: grid;
+    margin-top: 110px;
+    border-radius: 30px;
+    overflow: visible;
+    /* Gingham! */
+    background-color: #FFE7A1;
+    background-image:
+      linear-gradient(90deg, rgba(255, 255, 255, .55) 50%, transparent 50%),
+      linear-gradient(rgba(255, 255, 255, .55) 50%, transparent 50%);
+    background-size: 36px 36px;
+    border: 3px solid var(--plum);
+    box-shadow: 0 8px 0 var(--plum);
+  }
+  .cats-photo { width: 100%; height: 260px; object-fit: cover; border-radius: 27px 27px 0 0; }
+  .cats-copy { padding: 26px 24px 30px; }
+  .cats-copy h3 { font-size: 36px; font-weight: 650; line-height: 1; margin-bottom: 10px; }
+  .cats-copy p { max-width: 40ch; }
+  .cat-sticker { position: absolute; right: 10px; top: -92px; width: 140px; z-index: 2; }
+
+  .price-note { margin-top: 30px; font-size: 16px; color: var(--plum-soft); }
+
+  @media (min-width: 560px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .card.cta { grid-column: 1 / -1; }
+    .head-sticker { width: 120px; }
+  }
+  @media (min-width: 900px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .card.cta { grid-column: auto; }
+    .card.photo :global(img) { height: 160px; }
+    .cats { grid-template-columns: 1fr 1fr; align-items: center; }
+    .cats-photo { height: 100%; min-height: 340px; border-radius: 27px 0 0 27px; }
+    .cats-copy { padding: 44px; }
+    .cats-copy h3 { font-size: 46px; }
+    .cat-sticker { width: 190px; right: 60px; top: -122px; }
+  }
+</style>

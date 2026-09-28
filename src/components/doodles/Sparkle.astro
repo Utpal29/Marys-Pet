@@ -1,0 +1,11 @@
+---
+interface Props { class?: string; style?: string }
+const { class: className, style } = Astro.props;
+---
+<svg class:list={['sparkle', className]} style={style} viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12 7-1 11-5 12-12z" fill="currentColor" />
+</svg>
+
+<style>
+  .sparkle { animation: twinkle 2.4s ease-in-out infinite; }
+</style>

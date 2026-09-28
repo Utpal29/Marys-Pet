@@ -1,0 +1,55 @@
+---
+import { business } from '../data/site';
+import Icon from './Icon.astro';
+import Paw from './doodles/Paw.astro';
+---
+<footer>
+  <div class="trail" aria-hidden="true">
+    {Array.from({ length: 14 }, () => <Paw />)}
+  </div>
+  <div class="wrap">
+    <span>© {new Date().getFullYear()} {business.name}, {business.street}, {business.city}, {business.region}</span>
+    <a href={business.phoneHref}><Icon name="phone" size={16} />{business.phone}</a>
+  </div>
+  <p class="wrap credit">Placeholder photos from Unsplash.</p>
+</footer>
+
+<nav class="bar" aria-label="Contact">
+  <a class="btn btn-main" href={business.phoneHref}><Icon name="phone" />Call</a>
+  <a class="btn btn-alt" href={business.smsHref}><Icon name="chat" />Text</a>
+</nav>
+
+<style>
+  footer {
+    background: var(--plum); color: #D9C6DA;
+    font-size: 14px;
+    padding: 18px 0 36px;
+    overflow: hidden;
+  }
+  .trail {
+    display: flex; gap: 26px; justify-content: center;
+    color: rgba(246, 201, 218, .22);
+    margin-bottom: 18px;
+  }
+  .trail :global(svg) { width: 20px; rotate: 90deg; flex: none; }
+  .trail :global(svg:nth-child(even)) { translate: 0 10px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+  footer a { display: inline-flex; align-items: center; gap: 6px; color: var(--paper); font-weight: 700; }
+  .credit { margin-top: 10px; font-size: 13px; opacity: .7; }
+
+  .bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 10px 12px 14px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    background: rgba(255, 252, 250, .95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 2px solid var(--line);
+  }
+  .bar .btn { padding: 13px; font-size: 17px; }
+
+  @media (min-width: 900px) {
+    .bar { display: none; }
+  }
+</style>

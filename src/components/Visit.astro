@@ -1,0 +1,87 @@
+---
+import { business, hours } from '../data/site';
+import { formatTime } from '../lib/hours';
+import Icon from './Icon.astro';
+
+const names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+// Show Monday first.
+const rows = [1, 2, 3, 4, 5, 6, 0].map((d) => ({
+  d,
+  name: names[d],
+  time: hours[d] ? `${formatTime(hours[d]!.open)} – ${formatTime(hours[d]!.close)}` : 'Closed',
+}));
+---
+<section id="visit" aria-labelledby="visit-title">
+  <div class="wrap grid">
+    <div>
+      <h2 id="visit-title">Hours</h2>
+      <table class="hours" data-hours>
+        <tbody>
+          {rows.map((r) => (
+            <tr data-d={r.d}>
+              <td>{r.name}<span class="today-tag hand">today!</span></td>
+              <td>{r.time === 'Closed' ? <span>Closed <span class="zz hand">zzz</span></span> : r.time}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="addr"><Icon name="pin" size={22} />{business.street}, {business.city}, {business.region} {business.postal}</p>
+      <p class="small">Right on Main St E, easy by car or HSR bus. Formerly {business.formerly}.</p>
+      <div class="ctas">
+        <a class="btn btn-alt" href={business.mapsDirections} target="_blank" rel="noopener">Get directions</a>
+      </div>
+    </div>
+
+    <div class="map-wrap">
+      <span class="tape lilac t1"></span>
+      <span class="tape mint t2"></span>
+      <div class="map">
+        <iframe title={`Map to ${business.name}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade" src={business.mapsEmbed}></iframe>
+      </div>
+      <p class="here hand" aria-hidden="true">we're right here! ♡</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { hamiltonNow } from '../lib/hours';
+  const { day } = hamiltonNow();
+  document.querySelector(`[data-hours] tr[data-d="${day}"]`)?.classList.add('today');
+</script>
+
+<style>
+  #visit { padding-top: 40px; }
+  .grid { display: grid; gap: 50px; }
+  .hours { width: 100%; border-collapse: collapse; font-size: 17px; }
+  .hours td { padding: 11px 4px; border-bottom: 1.5px dashed var(--line); }
+  .hours td:last-child { text-align: right; font-weight: 700; }
+  .hours :global(tr.today) td { background: var(--bubble); font-weight: 700; border-color: transparent; }
+  .hours :global(tr.today) td:first-child { border-radius: 14px 0 0 14px; padding-left: 14px; }
+  .hours :global(tr.today) td:last-child { border-radius: 0 14px 14px 0; padding-right: 14px; }
+  .today-tag { display: none; margin-left: 10px; font-size: 21px; color: var(--plum-soft); }
+  .hours :global(tr.today) .today-tag { display: inline; }
+  .zz { font-size: 20px; color: var(--plum-soft); }
+
+  .addr { display: flex; align-items: center; gap: 8px; font-size: 19px; margin: 18px 0 6px; font-weight: 600; }
+  .small { font-size: 15px; color: var(--plum-soft); }
+
+  .map-wrap { position: relative; }
+  .map {
+    border-radius: 26px; overflow: hidden;
+    border: 6px solid var(--paper);
+    box-shadow: var(--shadow), 0 0 0 2px var(--line);
+    aspect-ratio: 4 / 3; background: var(--mint);
+    rotate: .8deg;
+  }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .t1 { left: 12%; top: -10px; rotate: -8deg; }
+  .t2 { left: auto; right: -10px; top: auto; bottom: 24px; rotate: 80deg; }
+  .here {
+    position: absolute; left: 10px; bottom: -40px;
+    font-size: 26px; rotate: -4deg;
+  }
+
+  @media (min-width: 900px) {
+    .grid { grid-template-columns: .8fr 1.2fr; gap: 60px; align-items: start; }
+  }
+</style>

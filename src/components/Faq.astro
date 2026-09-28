@@ -1,0 +1,59 @@
+---
+import { faqs } from '../data/site';
+import corgis from '../assets/stickers/corgis.png';
+import Sticker from './Sticker.astro';
+import Paw from './doodles/Paw.astro';
+---
+<section id="faq" aria-labelledby="faq-title">
+  <div class="wrap two">
+    <div class="side">
+      <h2 id="faq-title">Questions</h2>
+      <p class="sub">Don't see yours? Just call or text.</p>
+      <Sticker src={corgis} width={220} class="corgis" />
+    </div>
+    <div class="faq">
+      {faqs.map((f) => (
+        <details>
+          <summary>
+            <span>{f.q}</span>
+            <span class="toggle" aria-hidden="true"><Paw /></span>
+          </summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .side { position: relative; }
+  .corgis { position: absolute; right: -6px; top: -26px; width: 132px; rotate: 6deg; }
+  .side .sub { max-width: 58%; }
+  details { border-top: 2px dashed var(--line); }
+  details:last-child { border-bottom: 2px dashed var(--line); }
+  summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 20px 0;
+    font-family: var(--display); font-weight: 600; font-size: 21px; line-height: 1.25;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .toggle {
+    flex: none;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--bubble); color: var(--plum);
+    display: grid; place-items: center;
+    transition: rotate .35s var(--bounce), background .2s;
+  }
+  .toggle :global(svg) { width: 20px; }
+  summary:hover .toggle { rotate: -15deg; }
+  details[open] .toggle { rotate: 180deg; background: var(--sun); }
+  details p { padding: 0 0 22px; color: var(--plum-soft); max-width: 60ch; }
+  details[open] p { animation: rise .35s ease-out; }
+
+  @media (min-width: 900px) {
+    .two { display: grid; grid-template-columns: .8fr 1.2fr; gap: 60px; }
+    .corgis { position: static; width: 220px; margin-top: 10px; rotate: -4deg; }
+    .side .sub { max-width: none; }
+  }
+</style>

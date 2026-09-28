@@ -1,0 +1,28 @@
+---
+// Die-cut pet sticker cut out of a photo (see README for how these were made).
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  /** Display width in CSS px. */
+  width: number;
+  class?: string;
+  style?: string;
+}
+
+const { src, width, class: className, style } = Astro.props;
+---
+<Image
+  src={src}
+  alt=""
+  aria-hidden="true"
+  width={width}
+  widths={[width, width * 2]}
+  sizes={`${width}px`}
+  format="webp"
+  quality={80}
+  loading="lazy"
+  class:list={['sticker', className]}
+  style={style}
+/>
